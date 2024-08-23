@@ -4,6 +4,7 @@ class Gameboard {
     constructor(size = 10) {
        this.size = size;
        this.board = [];
+       this.missedShots = [];
     }
 
     placeShip(shipLength, startX, startY, direction) {
@@ -46,6 +47,31 @@ class Gameboard {
         return this.board.some(({ coordinates }) =>
           coordinates.some(coord => coord.x === coordinate.x && coord.y === coordinate.y)
         );
+      }
+
+      receiveAttack(coordX, coordY) {
+        for (let i = 0; i < this.board.length; i++) {
+          for (let o = 0; o < this.board[i].coordinates.length; o++) {
+            if (this.board[i].coordinates[o].x === coordX && this.board[i].coordinates[o].y === coordY) {
+              if (this.board[i].coordinates[o].hit) {
+                return false;
+              } else {
+                this.board[i].coordinates[o].hit = true;
+                this.board[i].ship.hit();
+                return true; 
+              }
+            }
+          }
+        }
+      
+        for (let miss of this.missedShots) {
+          if (miss.x === coordX && miss.y === coordY) {
+            return false;
+          }
+        }
+      
+        this.missedShots.push({ x: coordX, y: coordY });
+        return false; 
       }
 }
 
