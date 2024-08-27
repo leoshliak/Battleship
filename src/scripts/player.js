@@ -14,10 +14,10 @@ class Player {
       let x, y;
       let attackSuccess;
   
-      do {
+      while(this.hasAlreadyAttacked(x, y, opponent)) {
         x = Math.floor(Math.random() * opponent.gameBoard.size);
         y = Math.floor(Math.random() * opponent.gameBoard.size);
-      } while (this.hasAlreadyAttacked(x, y, opponent));
+      } 
   
       attackSuccess = opponent.gameBoard.receiveAttack(x, y);
       return attackSuccess;
