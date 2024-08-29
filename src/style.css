@@ -1,0 +1,71 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url(./fonts/Roboto-Regular.ttf), format('ttf');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "New Amsterdam";
+    src: url(./fonts/NewAmsterdam-Regular.ttf), format('ttf');
+    font-weight: 600;
+    font-style: normal;
+}
+
+body {
+  font-family: "Roboto";
+  font-size: 18px;
+}
+
+.container {
+    padding: 1rem 2rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.logo h1 {
+    font-size: 3rem;
+    letter-spacing: 2px;
+    font-family: "New Amsterdam";
+}
+
+.select-mode {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.select-text {
+    margin-bottom: 1rem;
+}
+
+.options {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;  
+    width: 100%;
+}
+
+.select-text {
+    font-size: 2rem;
+}
+
+.options div {
+    border: 1px solid #000;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
