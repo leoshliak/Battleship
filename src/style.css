@@ -23,15 +23,80 @@ body {
   font-size: 18px;
 }
 
+header {
+   width: 100%;
+   padding: 0.5rem 2rem;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header button {
+    position: relative;
+    overflow: hidden;
+    font-size: 1rem;
+    font-weight: 700;
+    height: 2.3rem;
+    padding: 0 1.3rem;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    border-radius: 5px;
+    border: none;
+    background-color: /*#5e5e5e*/ #262497;
+    color: #fff;
+}
+
+header button:hover::before {
+    transform: scaleX(1);
+}
+
+.button-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  header button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scaleX(0);
+    width: 100%;
+    height: inherit;
+    border-radius: inherit;
+    background:  linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    transition: all 0.475s;
+  }
+
+  .new-btn::before {
+   transform-origin: 100% 0;
+  }
+
+  .start-btn::before{
+     transform-origin: 0 50%;
+  }
+
+  header button:active{
+    transform: scale(0.95);
+  }
+
+  header button:hover {
+    transition: all 0.4s;
+  }
+
 .container {
-    padding: 1rem 2rem;
+    width: 100%;
+    padding: 1rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1rem;
 }
 
 .logo h1 {
@@ -42,30 +107,20 @@ body {
 
 .select-mode {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 20px;
+    width: 60%;
+    border-bottom: 2px solid black;
+    padding-bottom: 15px;
 }
 
 .select-text {
-    margin-bottom: 1rem;
-}
-
-.options {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;  
-    width: 100%;
+    font-weight: 800;
 }
 
 .select-text {
     font-size: 2rem;
 }
 
-.options div {
-    border: 1px solid #000;
-    padding: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
