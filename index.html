@@ -7,22 +7,25 @@
 </head>
 <body>
 
+    <header>
+     <button class="start-btn"><span class="button-content">Start Game</span></button>
+   <div class="logo">
+        <h1 class="logo-text">BATTLESHIP</h1> 
+     </div>  
+     <button class="new-btn"><span class="button-content">New Game</span></button>
+     </header>
    <div class="container">
-     <div class="logo">
-        <h1 class="logo-text">BATTLESHIP</h1>
-     </div>
-
      <div class="select-mode">
         <p class="select-text">Play against:</p>
         <div class="options">
-            <div class="vs-player">Player</div>
-            <div class="vs-computer">Computer</div>
+            <select name="" id="type">
+                <option value="Player">Player</option>
+                <option value="Computer">Computer</option>
+            </select>
         </div>
         </div>
 
         <div class="boards"></div>
-
-        <div class="reset"><button>Reset Game</button></div>
      
    </div>
 
