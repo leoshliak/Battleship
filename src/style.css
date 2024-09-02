@@ -123,4 +123,80 @@ header button:hover::before {
     font-size: 2rem;
 }
 
+#type {
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    -ms-appearance:none;
+    appearance:none;
+    outline:0;
+    box-shadow:none;
+    border:0!important;
+    background: #5c6664;
+    background-image: none;
+    flex: 1;
+    padding: 0 0.7em;
+    color:#fff;
+    cursor:pointer;
+    font-size: 1.2em;
+    letter-spacing: 0.4px;
+}
 
+#type::-ms-expand {
+    display: none;
+ }
+
+ .options {
+    position: relative;
+   display: flex;
+   width: 10em;
+   height: 2em;
+   line-height: 3;
+   background: #5c6664;
+   overflow: hidden;
+   border-radius: .25em;
+ }
+
+ .options::after {
+    content: '\25BC';
+    position: absolute;
+    bottom: -25%;
+    right: 0;
+    padding: 0 0.5em;
+    background: #434747;
+    cursor:pointer;
+    pointer-events:none;
+    transition:.25s all ease;
+ }
+
+ .options:hover::after {
+    color: #23b499;
+ }
+
+ .boards {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 4%;
+    gap: 15%;
+ }
+
+.board-1,
+.board-2 {
+    width: 60vh;
+    height: 60vh;
+    border: 1px solid #000;
+}
+
+.board-div {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    text-align: center;
+}
+
+.board-div p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
