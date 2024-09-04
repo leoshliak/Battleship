@@ -6,6 +6,29 @@ class Player {
       this.gameBoard = new Gameboard(boardSize, maxShips); 
     }
   
+    placeShipsRandomly() {
+      let shipLengths = [5, 4, 3, 3, 2]; 
+      for (let length of shipLengths) {
+          let placed = false;
+          while (!placed) {
+              const x = Math.floor(Math.random() * this.gameBoard.size);
+              const y = Math.floor(Math.random() * this.gameBoard.size);
+              let direction;
+              if (Math.random() < 0.5) {
+                  direction = 'horizontal';
+              } else {
+                  direction = 'vertical';
+              }
+              try {
+                  this.gameBoard.placeShip(length, x, y, direction);
+                  placed = true;
+              } catch (e) {
+                  continue;
+              }
+          }
+      }
+  }
+
     randomAttack(opponent) {
       if (this.type === 'Player') {
         throw new Error('randomAttack is only available for computer players.');
