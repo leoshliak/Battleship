@@ -109,7 +109,7 @@ header button:hover::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 35px;
     width: 60%;
     border-bottom: 2px solid black;
     padding-bottom: 15px;
@@ -121,6 +121,7 @@ header button:hover::before {
 
 .select-text {
     font-size: 2rem;
+    letter-spacing: 0.6px;
 }
 
 #type {
@@ -137,7 +138,7 @@ header button:hover::before {
     padding: 0 0.7em;
     color:#fff;
     cursor:pointer;
-    font-size: 1.2em;
+    font-size: 1.25em;
     letter-spacing: 0.4px;
 }
 
@@ -177,21 +178,24 @@ header button:hover::before {
     align-items: center;
     justify-content: center;
     width: 100%;
-    margin-top: 4%;
-    gap: 15%;
+    margin-top: 6vh;
+    gap: 13%;
  }
 
 .board-1,
 .board-2 {
     width: 60vh;
     height: 60vh;
-    border: 1px solid #000;
+    border: 2px solid #000;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
 }
 
 .board-div {
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 10px;
     text-align: center;
 }
 
@@ -200,3 +204,11 @@ header button:hover::before {
     font-weight: 700;
     letter-spacing: 0.5px;
 }
+
+.grid-cell {
+    border: 1px solid #000;
+    justify-content: center;
+    align-items: center;
+}
+
+
