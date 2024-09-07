@@ -6,7 +6,6 @@
     <title>Battleship</title>
 </head>
 <body>
-
     <header>
      <button class="start-btn"><span class="button-content">Start Game</span></button>
    <div class="logo">
@@ -16,28 +15,34 @@
      </header>
    <div class="container">
      <div class="select-mode">
-        <p class="select-text">Play against:</p>
+        <p class="select-text">Game mode: </p>
         <div class="options">
             <select name="" id="type">
                 <option value="Computer">Computer</option>
-                <option value="Player">Player</option>        
+                <option value="Player">1 VS 1</option>        
             </select>
         </div>
         </div>
 
         <div class="boards">
             <div class="board-div">
-                <p>Your Board</p>
+                <p id="board1-text">Your Board</p>
             <div class="board-1"></div>
             </div>
             <div class="board-div">
-                <p>Enemy Board</p>
+                <p id="board2-text">Enemy Board</p>
             <div class="board-2"></div>
         </div>
         </div>
-     
    </div>
-
+   <dialog class="play-vs__computer" close>
+    <p class="dialog1-title">Welcome to battleship game</p>
+    <div class="dialog1-container">
+       <p class="dialog1-subtitle">Place your <span class="ship-name1">Carrier</span></p>
+       <button class="dialog1-rotate">rotate</button>
+       <div class="dialog-board1"></div>
+    </div>
+  </dialog>
     <script src="main.js"></script>
 </body>
 </html>
