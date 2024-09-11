@@ -70,11 +70,11 @@ header button:hover::before {
   }
 
   .new-btn::before {
-   transform-origin: 100% 0;
+   transform-origin: 0 100% ;
   }
 
-  .start-btn::before{
-     transform-origin: 0 50%;
+  .reset-btn::before{
+     transform-origin: 100% 0 ;
   }
 
   header button:active{
@@ -205,7 +205,8 @@ header button:hover::before {
     letter-spacing: 1px;
 }
 
-.grid-cell {
+.grid-cell,
+.grid-cell-dialog {
   border: 1px solid #000;  
 }
 
@@ -246,9 +247,9 @@ header button:hover::before {
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    gap: 15px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    gap: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .dialog1-subtitle {
@@ -262,6 +263,10 @@ header button:hover::before {
     color: #0c9999;
 }
 
+.ship-name1:hover {
+    text-decoration: none;
+}
+
 .dialog1-rotate {
     font-size: 1.2rem;
     padding: 5px 8px;
@@ -271,8 +276,8 @@ header button:hover::before {
     font-weight: 700;
     border-radius: 5px;
     color: #fff;
-    background: #000; 
-    border: 3px solid #000;
+    background: #4a4b53; 
+    border: 3px solid #4a4b53;
     transition: all 0.3s;
 }
 
@@ -286,13 +291,42 @@ header button:hover::before {
 }
 
 .dialog-board1 {
-    width: 40vh;
-    height: 40vh;
+    width: 350px;
+    height: 350px;
     border: 2px solid #000;
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
-
+    cursor: pointer;
 }
 
+::backdrop {
+    background-color: #000;
+    opacity: 0.35;
+}
 
+@keyframes show {
+    from {
+        transform: translate(-50%, -50%) scale(0);
+
+    }
+    to {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.play-vs__computer[open] {
+    animation: show 1s ease normal;
+}
+
+.grid-cell-dialog.hovered {
+    background-color: #000000c0;
+}
+
+.grid-cell-dialog.default {
+    transition: all 0.1s;
+}
+
+.grid-cell-dialog.selected {
+    background-color: #000000;
+}

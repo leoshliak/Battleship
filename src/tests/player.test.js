@@ -55,4 +55,11 @@ describe('Player Class', () => {
       const alreadyAttacked = player.hasAlreadyAttacked(1, 1, opponent);
       expect(alreadyAttacked).toBe(false);
   });
+
+  test('should place the correct number of ships', () => {
+    const computer = new Player('Computer', 10, 5);
+    computer.placeShipsRandomly();
+    
+    expect(computer.gameBoard.board.length).toBe(5); 
+  });
 });
