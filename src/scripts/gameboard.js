@@ -6,6 +6,7 @@ class Gameboard {
        this.maxShips = maxShips;
        this.board = [];      
        this.missedShots = [];
+       this.shotOrder = [];
     }
 
     placeShip(shipLength, startX, startY, direction) {
@@ -57,28 +58,29 @@ class Gameboard {
 
       receiveAttack(coordX, coordY) {
         for (let i = 0; i < this.board.length; i++) {
-          for (let o = 0; o < this.board[i].coordinates.length; o++) {
-            if (this.board[i].coordinates[o].x === coordX && this.board[i].coordinates[o].y === coordY) {
-              if (this.board[i].coordinates[o].hit) {
-                return false; 
-              } else {
-                this.board[i].coordinates[o].hit = true;
-                this.board[i].ship.hit();
-                return true; 
-              }
+            for (let o = 0; o < this.board[i].coordinates.length; o++) {
+                if (this.board[i].coordinates[o].x === coordX && this.board[i].coordinates[o].y === coordY) {
+                    if (this.board[i].coordinates[o].hit) {
+                        return false;
+                    } else {
+                      this.shotOrder.push({ x: coordX, y: coordY });
+                        this.board[i].coordinates[o].hit = true;
+                        this.board[i].ship.hit(); 
+                        return true; 
+                    }
+                }
             }
-          }
         }
     
-        for (let miss of this.missedShots) {
-          if (miss.x === coordX && miss.y === coordY) {
-            return false; 
-          }
+        // If the attack was a miss
+        const alreadyMissed = this.missedShots.some(miss => miss.x === coordX && miss.y === coordY);
+        if (!alreadyMissed) {
+            this.shotOrder.push({ x: coordX, y: coordY });
+            this.missedShots.push({ x: coordX, y: coordY });
         }
     
-        this.missedShots.push({ x: coordX, y: coordY });
-        return false; 
-      }
+        return false; // Miss recorded
+    }
     
       allShipsSunk() {
         return this.board.every(({ ship }) => ship.sunk);

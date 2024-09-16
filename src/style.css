@@ -205,9 +205,13 @@ header button:hover::before {
     letter-spacing: 1px;
 }
 
-.grid-cell,
+.grid-cell-board1,
+.grid-cell-board2,
 .grid-cell-dialog {
   border: 1px solid #000;  
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .default,
@@ -327,6 +331,28 @@ header button:hover::before {
     transition: all 0.1s;
 }
 
-.grid-cell-dialog.selected {
-    background-color: #000000;
+.grid-cell-dialog.selected,
+.grid-cell-board1.selected {
+    background-color: #2b2b2b;
+}
+
+.grid-cell-board1 .miss,
+.grid-cell-board2 .miss {
+  width: 13px;
+  height: 13px;
+  background-color: #2b2b2b;
+  border-radius: 50%;
+}
+
+.grid-cell-board1.shoted,
+.grid-cell-board2.shoted {
+    background-color: #d3d3d3;
+}
+
+.grid-cell-board1 .hit,
+.grid-cell-board2 .hit {
+  width: 13px;
+  height: 13px;
+  background-color: #ff0000;
+  border-radius: 50%;
 }

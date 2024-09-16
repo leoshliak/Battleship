@@ -15,6 +15,7 @@ const resetBtn = document.querySelector('.reset-btn');
 const newGameBtn = document.querySelector('.new-btn');
 const dialogBoard1 = document.querySelector('.dialog-board1');
 const rotateBtn1 = document.querySelector('.dialog1-rotate');
+let playVS = 'Computer'
 let direct = 'horizontal';
 let player;
 let computer;
@@ -32,7 +33,7 @@ let gameStarted = false;
           y = y - 1;
         }
         let cell = document.createElement("div");
-        cell.classList.add('grid-cell');
+        cell.classList.add('grid-cell-board1');
         cell.classList.add('default');
         cell.setAttribute('x-data', `${x - 1}`);
         cell.setAttribute('y-data', `${y - 1}`);
@@ -51,13 +52,16 @@ let gameStarted = false;
           y = y - 1;
         }
         let cell = document.createElement("div");
-        cell.classList.add('grid-cell');
+        cell.classList.add('grid-cell-board2');
         cell.classList.add('default-enemy');
         cell.setAttribute('x-data', `${x - 1}`);
         cell.setAttribute('y-data', `${y - 1}`);
         board2.insertAdjacentElement("beforeend", cell);
     }
  }
+ 
+ buildBoard1();
+ buildBoard2();
 
  selectType.addEventListener('change', () =>{
   if(gameStarted === true) return;
@@ -81,7 +85,13 @@ let gameStarted = false;
       direct = 'horizontal';
       playerShipPlaced = 0;
       gameStarted = false;
+      board1.innerHTML = '';
+      board2.innerHTML = '';
+      buildBoard1();
+      buildBoard2(); 
     }
+
+    playVS = 'Computer';
    let x = 0;
     let y = 10;
    for(let i = 0; i < 100; i++) {
@@ -166,6 +176,21 @@ dialogBoard1.addEventListener('click', (event) =>{
     }
   }
 
+  for (let i = 0; i < shipLengths[playerShipPlaced]; i++) {
+    if(direct === 'horizontal') {
+      const nextCell = document.querySelector(`.grid-cell-board1[x-data="${x + i}"][y-data="${y}"]`);
+      if (nextCell) {
+        nextCell.classList.add('selected');
+    }
+    }else {
+      const nextCell = document.querySelector(`.grid-cell-board1[x-data="${x}"][y-data="${y + i}"]`);
+    
+      if (nextCell) {
+          nextCell.classList.add('selected');
+      }
+    }
+  }
+
    playerShipPlaced++;
    console.log(player);
    if(playerShipPlaced == 5) {
@@ -183,6 +208,79 @@ rotateBtn1.addEventListener('click', () => {
  }
 });
 
+board2.addEventListener('click', (event) => {
+  if(!event.target.classList.contains('grid-cell-board2')) return;
+  if(!gameStarted) return;
+  if(event.target.classList.contains('shoted')) return;
 
- buildBoard1();
- buildBoard2();
+    const coordX = parseInt(event.target.getAttribute('x-data'), 10);
+    const coordY = parseInt(event.target.getAttribute('y-data'), 10);
+
+    const cell = document.querySelector(`.grid-cell-board2[x-data="${coordX}"][y-data="${coordY}"]`);
+  try{
+  if(playVS == 'Computer') {
+  computer.gameBoard.receiveAttack(coordX, coordY);
+  const playerMissedShots = computer.gameBoard.missedShots;
+  cell.classList.add('shoted');
+
+  const isMiss1 = playerMissedShots.some(shot => shot.x === coordX && shot.y === coordY);
+
+if (isMiss1) {
+  const missDot = document.createElement('span');
+  missDot.classList.add('miss');
+  cell.appendChild(missDot);
+} else {
+  const hitDot = document.createElement('span');
+  hitDot.classList.add('hit');
+  cell.appendChild(hitDot);
+}
+
+
+cell.classList.add('shoted');
+
+if(computer.gameBoard.allShipsSunk()) {
+  alert('Victory');
+  gameStarted = false;
+}
+
+
+
+computer.randomAttack(player);
+  const compMissedShots = player.gameBoard.missedShots;
+  const compAllShots = player.gameBoard.shotOrder;
+  const compX = compAllShots[compAllShots.length-1].x;
+  const compY = compAllShots[compAllShots.length-1].y;
+  const cell2 = document.querySelector(`.grid-cell-board1[x-data="${compX}"][y-data="${compY}"]`);
+  const isMiss2 = compMissedShots.some(shot => shot.x === compX && shot.y === compY);
+  if (isMiss2) {
+    if (!cell2.querySelector('.miss')) {  
+        const missDot2 = document.createElement('span');
+        missDot2.classList.add('miss');
+        cell2.appendChild(missDot2);
+    }
+} else {
+    if (!cell2.querySelector('.hit')) {  
+        const hitDot2 = document.createElement('span');
+        hitDot2.classList.add('hit');
+        cell2.appendChild(hitDot2);
+    }
+}
+
+if(player.gameBoard.allShipsSunk()) {
+  alert('You lost');
+  gameStarted = false;
+}
+
+  console.log(compAllShots);
+  console.log(player.gameBoard.board);
+  console.log(computer.gameBoard.board);
+
+ }
+} catch (error) {
+  console.error('Error:', error);
+}
+});
+
+ 
+
+ 
