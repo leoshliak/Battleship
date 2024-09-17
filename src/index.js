@@ -15,6 +15,8 @@ const resetBtn = document.querySelector('.reset-btn');
 const newGameBtn = document.querySelector('.new-btn');
 const dialogBoard1 = document.querySelector('.dialog-board1');
 const rotateBtn1 = document.querySelector('.dialog1-rotate');
+const dialogResult = document.querySelector('.dialog-result');
+const resultClose = document.querySelector('.result-close');
 let playVS = 'Computer'
 let direct = 'horizontal';
 let player;
@@ -239,8 +241,23 @@ if (isMiss1) {
 cell.classList.add('shoted');
 
 if(computer.gameBoard.allShipsSunk()) {
-  alert('Victory');
+  const resultTitle = document.querySelector('.result-title');
+  resultTitle.classList.add('win')
+  resultTitle.textContent = 'You won!';
+  const resultDes = document.querySelector('.result-des');
+  resultDes.textContent = 'All of enemy ships are sunk';
+  dialogResult.showModal();
   gameStarted = false;
+  player = undefined;
+  computer = undefined;
+  dialogBoard1.innerHTML = '';
+  direct = 'horizontal';
+  playerShipPlaced = 0;
+  gameStarted = false;
+  board1.innerHTML = '';
+  board2.innerHTML = '';
+  buildBoard1();
+  buildBoard2(); 
 }
 
 
@@ -267,8 +284,23 @@ computer.randomAttack(player);
 }
 
 if(player.gameBoard.allShipsSunk()) {
-  alert('You lost');
+  const resultTitle = document.querySelector('.result-title');
+  resultTitle.classList.add('lode');
+  resultTitle.textContent = 'You Lost(';
+  const resultDes = document.querySelector('.result-des');
+  resultDes.textContent = 'All of your ships are sunk';
+  dialogResult.showModal();
   gameStarted = false;
+  player = undefined;
+  computer = undefined;
+  dialogBoard1.innerHTML = '';
+  direct = 'horizontal';
+  playerShipPlaced = 0;
+  gameStarted = false;
+  board1.innerHTML = '';
+  board2.innerHTML = '';
+  buildBoard1();
+  buildBoard2(); 
 }
 
   console.log(compAllShots);
@@ -280,7 +312,28 @@ if(player.gameBoard.allShipsSunk()) {
   console.error('Error:', error);
 }
 });
-
  
+resultClose.addEventListener('click', () => {
+  dialogResult.classList.add('hide');
+  dialogResult.addEventListener('animationend', onAnimationEnd, false);
 
+  
+  setTimeout(removeResultClasses , 1200);
  
+});
+
+function removeResultClasses() {
+  const resultTitle = document.querySelector('.result-title');
+   if(resultTitle.classList.contains('win')) {
+    resultTitle.classList.remove('win');
+  } else {
+    resultTitle.classList.remove('lose');
+  }
+}
+
+function onAnimationEnd() {
+  dialogResult.classList.remove('hide');
+  dialogResult.close();
+
+  dialogResult.removeEventListener('animationend', onAnimationEnd, false);
+}
