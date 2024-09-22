@@ -17,10 +17,23 @@ const dialogBoard1 = document.querySelector('.dialog-board1');
 const rotateBtn1 = document.querySelector('.dialog1-rotate');
 const dialogResult = document.querySelector('.dialog-result');
 const resultClose = document.querySelector('.result-close');
+const shipName1 = document.querySelector('#ship-name1');
+const shipName2 = document.querySelector('#ship-name2');
+const shipName3 = document.querySelector('#ship-name3');
+const dialog1VS1 = document.querySelector('.dialog__1-vs-1');
+const firstPlayerBoard = document.querySelector('.first-player-board');
+const secondPlayerBoard = document.querySelector('.second-player-board');
+const rotateBtn2 = document.querySelector('.first-player-rotate');
+const rotateBtn3 = document.querySelector('.second-player-rotate');
+const firstPlayerContainer = document.querySelector('.first-player-container');
+const dots = document.querySelectorAll('.dot');
+const secondPlayerContainer = document.querySelector('.second-player-container');
+
 let playVS = 'Computer'
 let direct = 'horizontal';
 let player;
 let computer;
+let player2;
 let playerShipPlaced = 0;
 let gameStarted = false;
 
@@ -55,7 +68,7 @@ let gameStarted = false;
         }
         let cell = document.createElement("div");
         cell.classList.add('grid-cell-board2');
-        cell.classList.add('default-enemy');
+        cell.classList.add('default');
         cell.setAttribute('x-data', `${x - 1}`);
         cell.setAttribute('y-data', `${y - 1}`);
         board2.insertAdjacentElement("beforeend", cell);
@@ -79,21 +92,25 @@ let gameStarted = false;
  });
 
  newGameBtn.addEventListener('click', () => { 
-  if(selectType.value == 'Computer') {
-    if(gameStarted == true) {
-      player = undefined;
-      computer = undefined;
-      dialogBoard1.innerHTML = '';
-      direct = 'horizontal';
-      playerShipPlaced = 0;
-      gameStarted = false;
-      board1.innerHTML = '';
-      board2.innerHTML = '';
-      buildBoard1();
-      buildBoard2(); 
-    }
+  if(gameStarted == true) {
+    player = undefined;
+    player2 = undefined;
+    computer = undefined;
+    dialogBoard1.innerHTML = '';
+    firstPlayerBoard.innerHTML = '';
+    secondPlayerBoard.innerHTML = '';
+    direct = 'horizontal';
+    playerShipPlaced = 0;
+    gameStarted = false;
+    board1.innerHTML = '';
+    board2.innerHTML = '';
+    buildBoard1();
+    buildBoard2(); 
+  }
 
+  if(selectType.value == 'Computer') {
     playVS = 'Computer';
+    shipName1.textContent = 'Carrier';
    let x = 0;
     let y = 10;
    for(let i = 0; i < 100; i++) {
@@ -111,13 +128,50 @@ let gameStarted = false;
    }
     player = new Player('Player', 10, 5);
     computer = new Player('Computer', 10, 5);
+    const compCells = document.querySelectorAll('.grid-cell-board2');
+    compCells.forEach(cell => cell.classList.add('enemy'));
    computer.placeShipsRandomly();
    console.log(computer);
    dialogVScomputer.showModal();
+  } else if(selectType.value == 'Player') {
+    playVS = 'Player';
+    let x = 0;
+    let y = 10;
+    for(let i = 0; i < 100; i++) {
+      x = x + 1;
+       if(x > 10) {
+         x = 1;
+         y = y - 1;
+       }
+
+       let cell1 = document.createElement("div");
+       cell1.classList.add('grid-cell-dialog2');
+       cell1.classList.add('default');
+       cell1.setAttribute('x-data', `${x -1}`);
+       cell1.setAttribute('y-data', `${y -1}`);
+       firstPlayerBoard.insertAdjacentElement("beforeend", cell1);
+
+       let cell2 = document.createElement("div");
+       cell2.classList.add('grid-cell-dialog3');
+       cell2.classList.add('default');
+       cell2.setAttribute('x-data', `${x -1}`);
+       cell2.setAttribute('y-data', `${y -1}`);
+       secondPlayerBoard.insertAdjacentElement("beforeend", cell2);
+       
+       player = new Player('Player', 10, 5);
+       player2 = new Player('Player', 10, 5);
+       const p1Cells = document.querySelectorAll('.grid-cell-board1');
+       p1Cells.forEach(cell => cell.classList.add('enemy'));
+       const p2Cells = document.querySelectorAll('.grid-cell-board2');
+       p2Cells.forEach(cell => cell.classList.add('enemy'));
+       dialog1VS1.showModal();
+       const container1vs1 = document.querySelector('.container__1-vs-1');
+       container1vs1.style.display = 'flex';
+   }
   }
  });
  
- function highlightCells(cell) {
+ function highlightCells(cell, cellClass) {
   let shipLengths = [5, 4, 3, 3, 2]; 
 
   const x = parseInt(cell.getAttribute('x-data'), 10);
@@ -129,12 +183,12 @@ let gameStarted = false;
 
   for (let i = 0; i < shipLengths[playerShipPlaced]; i++) {
     if(direct === 'horizontal') {
-      const nextCell = document.querySelector(`.grid-cell-dialog[x-data="${x + i}"][y-data="${y}"]`);
+      const nextCell = document.querySelector(`.${cellClass}[x-data="${x + i}"][y-data="${y}"]`);
       if (nextCell) {
         nextCell.classList.add('hovered');
     }
     }else {
-      const nextCell = document.querySelector(`.grid-cell-dialog[x-data="${x}"][y-data="${y + i}"]`);
+      const nextCell = document.querySelector(`.${cellClass}[x-data="${x}"][y-data="${y + i}"]`);
     
       if (nextCell) {
           nextCell.classList.add('hovered');
@@ -145,8 +199,44 @@ let gameStarted = false;
 
 dialogBoard1.addEventListener('mouseover', (event) => {
   if (event.target.classList.contains('grid-cell-dialog')) {
-      highlightCells(event.target);
+      highlightCells(event.target, 'grid-cell-dialog');
   }
+});
+
+dialogBoard1.addEventListener('mouseleave', () => {
+  document.querySelectorAll('.grid-cell-dialog.hovered').forEach(c => {
+    c.classList.remove('hovered');
+});
+});
+
+firstPlayerBoard.addEventListener('mouseover', (event) =>{
+  if (event.target.classList.contains('grid-cell-dialog2')) {
+    document.querySelectorAll('.grid-cell-dialog2.hovered').forEach(c => {
+      c.classList.remove('hovered');})
+    highlightCells(event.target, 'grid-cell-dialog2');
+}
+});
+
+firstPlayerBoard.addEventListener('mouseleave', () => {
+  document.querySelectorAll('.grid-cell-dialog2.hovered').forEach(c => {
+    c.classList.remove('hovered');
+});
+});
+
+
+secondPlayerBoard.addEventListener('mouseover', (event) => {
+  if (event.target.classList.contains('grid-cell-dialog3')) {
+    document.querySelectorAll('.grid-cell-dialog3.hovered').forEach(c => {
+      c.classList.remove('hovered');})
+      highlightCells(event.target, 'grid-cell-dialog3');
+}
+
+});
+
+secondPlayerBoard.addEventListener('mouseleave', () => {
+  document.querySelectorAll('.grid-cell-dialog3.hovered').forEach(c => {
+    c.classList.remove('hovered');
+});
 });
 
 dialogBoard1.addEventListener('mouseleave', () => {
@@ -158,10 +248,10 @@ dialogBoard1.addEventListener('mouseleave', () => {
 dialogBoard1.addEventListener('click', (event) =>{
    if(!event.target.classList.contains('grid-cell-dialog'))  return;
     let shipLengths = [5, 4, 3, 3, 2]; 
+    const shipNames = ['Carrier', 'Battleship', 'Destroyer', 'Submarine',	'Patrol Boat'];
    const x = parseInt(event.target.getAttribute('x-data'), 10);
    const y = parseInt(event.target.getAttribute('y-data'), 10);
    player.gameBoard.placeShip(shipLengths[playerShipPlaced], x, y, direct);
-
 
    for (let i = 0; i < shipLengths[playerShipPlaced]; i++) {
     if(direct === 'horizontal') {
@@ -194,13 +284,83 @@ dialogBoard1.addEventListener('click', (event) =>{
   }
 
    playerShipPlaced++;
+   shipName1.textContent = shipNames[playerShipPlaced];
    console.log(player);
    if(playerShipPlaced == 5) {
     dialogVScomputer.close();
     gameStarted = true;
    } 
    
-})
+});
+
+firstPlayerBoard.addEventListener('click', (event) =>{
+  if(!event.target.classList.contains('grid-cell-dialog2'))  return;
+  let shipLengths = [5, 4, 3, 3, 2]; 
+    const shipNames = ['Carrier', 'Battleship', 'Destroyer', 'Submarine',	'Patrol Boat'];
+   const x = parseInt(event.target.getAttribute('x-data'), 10);
+   const y = parseInt(event.target.getAttribute('y-data'), 10);
+   player.gameBoard.placeShip(shipLengths[playerShipPlaced], x, y, direct);
+
+   for (let i = 0; i < shipLengths[playerShipPlaced]; i++) {
+    if(direct === 'horizontal') {
+      const nextCell = document.querySelector(`.grid-cell-dialog2[x-data="${x + i}"][y-data="${y}"]`);
+      if (nextCell) {
+        nextCell.classList.add('selected');
+    }
+    }else {
+      const nextCell = document.querySelector(`.grid-cell-dialog2[x-data="${x}"][y-data="${y + i}"]`);
+    
+      if (nextCell) {
+          nextCell.classList.add('selected');
+      }
+    }
+  }
+
+   playerShipPlaced++;
+   shipName2.textContent = shipNames[playerShipPlaced];
+   if(playerShipPlaced == 5) {
+    playerShipPlaced = 0;
+    firstPlayerContainer.classList.add('show-2');
+    secondPlayerContainer.classList.add('show-2');
+    dots[0].classList.remove('active');
+    dots[1].classList.add('active');
+   } 
+});
+
+secondPlayerBoard.addEventListener('click', (event) => {
+  if(!event.target.classList.contains('grid-cell-dialog3'))  return;
+  let shipLengths = [5, 4, 3, 3, 2]; 
+    const shipNames = ['Carrier', 'Battleship', 'Destroyer', 'Submarine',	'Patrol Boat'];
+   const x = parseInt(event.target.getAttribute('x-data'), 10);
+   const y = parseInt(event.target.getAttribute('y-data'), 10);
+   player2.gameBoard.placeShip(shipLengths[playerShipPlaced], x, y, direct);
+
+   for (let i = 0; i < shipLengths[playerShipPlaced]; i++) {
+    if(direct === 'horizontal') {
+      const nextCell = document.querySelector(`.grid-cell-dialog3[x-data="${x + i}"][y-data="${y}"]`);
+      if (nextCell) {
+        nextCell.classList.add('selected');
+    }
+    }else {
+      const nextCell = document.querySelector(`.grid-cell-dialog3[x-data="${x}"][y-data="${y + i}"]`);
+    
+      if (nextCell) {
+          nextCell.classList.add('selected');
+      }
+    }
+  }
+
+  playerShipPlaced++;
+  shipName3.textContent = shipNames[playerShipPlaced];
+  if(playerShipPlaced == 5) {
+    dialog1VS1.close();
+    gameStarted = true;
+    firstPlayerContainer.classList.remove('show-2');
+    secondPlayerContainer.classList.remove('show-2');
+    dots[0].classList.add('active');
+    dots[1].classList.remove('active');
+  }
+});
 
 rotateBtn1.addEventListener('click', () => {
  if(direct === 'horizontal') {
@@ -210,10 +370,26 @@ rotateBtn1.addEventListener('click', () => {
  }
 });
 
+rotateBtn2.addEventListener('click', () => {
+  if(direct === 'horizontal') {
+   direct = 'vertical';
+  } else if(direct === 'vertical') {
+   direct = 'horizontal';
+  }
+ });
+
+ rotateBtn3.addEventListener('click', () => {
+  if(direct === 'horizontal') {
+   direct = 'vertical';
+  } else if(direct === 'vertical') {
+   direct = 'horizontal';
+  }
+ });
+
 board2.addEventListener('click', (event) => {
   if(!event.target.classList.contains('grid-cell-board2')) return;
   if(!gameStarted) return;
-  if(event.target.classList.contains('shoted')) return;
+  if(event.target.classList.contains('shotted')) return;
 
     const coordX = parseInt(event.target.getAttribute('x-data'), 10);
     const coordY = parseInt(event.target.getAttribute('y-data'), 10);
@@ -223,7 +399,7 @@ board2.addEventListener('click', (event) => {
   if(playVS == 'Computer') {
   computer.gameBoard.receiveAttack(coordX, coordY);
   const playerMissedShots = computer.gameBoard.missedShots;
-  cell.classList.add('shoted');
+  cell.classList.add('shotted');
 
   const isMiss1 = playerMissedShots.some(shot => shot.x === coordX && shot.y === coordY);
 
@@ -236,9 +412,6 @@ if (isMiss1) {
   hitDot.classList.add('hit');
   cell.appendChild(hitDot);
 }
-
-
-cell.classList.add('shoted');
 
 if(computer.gameBoard.allShipsSunk()) {
   const resultTitle = document.querySelector('.result-title');
@@ -274,6 +447,7 @@ computer.randomAttack(player);
         const missDot2 = document.createElement('span');
         missDot2.classList.add('miss');
         cell2.appendChild(missDot2);
+        cell2.classList.add('shotted');
     }
 } else {
     if (!cell2.querySelector('.hit')) {  
@@ -316,10 +490,8 @@ if(player.gameBoard.allShipsSunk()) {
 resultClose.addEventListener('click', () => {
   dialogResult.classList.add('hide');
   dialogResult.addEventListener('animationend', onAnimationEnd, false);
-
   
   setTimeout(removeResultClasses , 1200);
- 
 });
 
 function removeResultClasses() {
@@ -337,3 +509,26 @@ function onAnimationEnd() {
 
   dialogResult.removeEventListener('animationend', onAnimationEnd, false);
 }
+
+resetBtn.addEventListener('click', () =>{
+  if(playVS == 'Computer') {
+    const playerAllShips = player.gameBoard.board;
+    for(let ship of playerAllShips) {
+      ship.damage = 0;
+      ship.sunk = false;
+    }
+    console.log(player);
+    const board1Cells = document.querySelectorAll('.grid-cell-board1');
+    board1Cells.forEach(cell => {
+      cell.classList.remove('shotted');
+      cell.innerHTML = '';
+   });
+    computer = new Player('Computer', 10, 5);
+    computer.placeShipsRandomly();
+    const board2Cells = document.querySelectorAll('.grid-cell-board2');
+    board2Cells.forEach(cell => {
+       cell.classList.remove('shotted');
+       cell.innerHTML = '';
+    });
+  }
+})

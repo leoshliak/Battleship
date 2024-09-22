@@ -207,7 +207,9 @@ header button:hover::before {
 
 .grid-cell-board1,
 .grid-cell-board2,
-.grid-cell-dialog {
+.grid-cell-dialog,
+.grid-cell-dialog2,
+.grid-cell-dialog3 {
   border: 1px solid #000;  
   display: flex;
   align-items: center;
@@ -220,7 +222,7 @@ header button:hover::before {
     transition: all 0.3s;
 }
 
-.default-enemy:hover {
+.enemy:hover {
     background-color: #d1d1d1;
     cursor: crosshair;
 }
@@ -246,7 +248,9 @@ header button:hover::before {
     color: transparent;
 }
 
-.dialog1-container {
+.dialog1-container,
+.first-player-container,
+.second-player-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -256,22 +260,26 @@ header button:hover::before {
     margin-bottom: 10px;
 }
 
-.dialog1-subtitle {
+.dialog1-subtitle,
+.first-player-subtitle,
+.second-player-subtitle {
     font-size: 1.5rem; 
 }
 
-.ship-name1 {
+.ship-name {
     text-decoration: underline;
     font-family: 'New Amsterdam';
-    letter-spacing: 0.8px;
+    letter-spacing: 1px;
     color: #0c9999;
 }
 
-.ship-name1:hover {
+.ship-name:hover {
     text-decoration: none;
 }
 
-.dialog1-rotate {
+.dialog1-rotate,
+.first-player-rotate,
+.second-player-rotate {
     font-size: 1.2rem;
     padding: 5px 8px;
     text-transform: uppercase;
@@ -285,16 +293,22 @@ header button:hover::before {
     transition: all 0.3s;
 }
 
-.dialog1-rotate:hover {
+.dialog1-rotate:hover,
+.first-player-rotate:hover,
+.second-player-rotate :hover {
   transform: scale(1.03);
 }
 
-.dialog1-rotate:active {
+.dialog1-rotate:active,
+.first-player-rotate:active,
+.second-player-rotate:active  {
     transform: scale(1);
     border:   3px solid silver;;
 }
 
-.dialog-board1 {
+.dialog-board1,
+.first-player-board,
+.second-player-board {
     width: 350px;
     height: 350px;
     border: 2px solid #000;
@@ -323,16 +337,20 @@ header button:hover::before {
     animation: show 1s ease normal;
 }
 
-.grid-cell-dialog.hovered {
+.hovered {
     background-color: #000000c0;
 }
 
-.grid-cell-dialog.default {
+.grid-cell-dialog.default,
+.grid-cell-dialog2.default,
+.grid-cell-dialog3.default {
     transition: all 0.1s;
 }
 
 .grid-cell-dialog.selected,
-.grid-cell-board1.selected {
+.grid-cell-board1.selected,
+.grid-cell-dialog2.selected,
+.grid-cell-dialog3.selected {
     background-color: #2b2b2b;
 }
 
@@ -344,8 +362,8 @@ header button:hover::before {
   border-radius: 50%;
 }
 
-.grid-cell-board1.shoted,
-.grid-cell-board2.shoted {
+.grid-cell-board1.shotted,
+.grid-cell-board2.shotted {
     background-color: #d3d3d3;
 }
 
@@ -453,5 +471,60 @@ header button:hover::before {
     animation: hide 1s ease normal;
 }
 
+.dialog__1-vs-1 {
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ border: none;
+ padding: 1rem 2rem;
+ border-radius: 10px;
+ width: 420px;
+}
 
+.container__1-vs-1 {
+  flex-direction: row;
+  align-items: center;
+  gap: 30px;
+  overflow: hidden;
+}
+
+.first-player-container,
+.second-player-container {
+    padding-left: 5px;
+    padding-right: 5px;
+    transition: all 0.5s;
+}
     
+.dialog__1-vs-1[open] {
+    animation: show 1s ease normal;
+}
+
+
+
+.show-2{
+    transform: translate(-108%, 0px);
+}
+
+
+.dots {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #000;
+    transition: all 0.8s;
+}
+
+.dot.active {
+    width: 28px;
+    border-radius: 5px;
+}
