@@ -15,7 +15,7 @@
      </header>
    <div class="container">
      <div class="select-mode">
-        <p class="select-text">Game mode: </p>
+        <p class="select-text">New game mode: </p>
         <div class="options">
             <select name="" id="type">
                 <option value="Computer">Computer</option>
@@ -38,7 +38,7 @@
    <dialog class="play-vs__computer" close>
     <p class="dialog1-title">Welcome to battleship game</p>
     <div class="dialog1-container">
-       <p class="dialog1-subtitle">Place your <span class="ship-name1">Carrier</span></p>
+       <p class="dialog1-subtitle">Place your <span class="ship-name" id="ship-name1">Carrier</span></p>
        <button class="dialog1-rotate">rotate</button>
        <div class="dialog-board1"></div>
     </div>
@@ -51,6 +51,26 @@
 </div>
     <button class="result-close">close</button>
 </div>
+  </dialog>
+  <dialog class="dialog__1-vs-1">
+    <p class="dialog1-title">Welcome to battleship game</p>
+    <div class="dots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+    </div>
+    <div class="container__1-vs-1">
+    <div class="first-player-container">
+        <p class="first-player-subtitle">Place your <span class="ship-name" id="ship-name2">Carrier</span></p>
+        <button class="first-player-rotate">rotate</button>
+        <div class="first-player-board"></div>
+     </div>
+     <div class="second-player-container">
+        <p class="second-player-subtitle">Place your <span class="ship-name" id="ship-name3">Carrier</span></p>
+        <button class="second-player-rotate">rotate</button>
+        <div class="second-player-board"></div>
+    </div>
+     </div>
+    </div>
   </dialog>
     <script src="main.js"></script>
 </body>
