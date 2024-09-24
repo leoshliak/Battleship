@@ -28,6 +28,7 @@ const rotateBtn3 = document.querySelector('.second-player-rotate');
 const firstPlayerContainer = document.querySelector('.first-player-container');
 const dots = document.querySelectorAll('.dot');
 const secondPlayerContainer = document.querySelector('.second-player-container');
+const container1vs1 = document.querySelector('.container__1-vs-1');
 
 let playVS = 'Computer'
 let direct = 'horizontal';
@@ -35,7 +36,8 @@ let player;
 let computer;
 let player2;
 let playerShipPlaced = 0;
-let gameStarted = false;
+let gameStarted = false;;
+let turn = '1st Player'
 
  function buildBoard1() {
     let x = 0;
@@ -102,6 +104,12 @@ let gameStarted = false;
     direct = 'horizontal';
     playerShipPlaced = 0;
     gameStarted = false;
+    resetBtn.style.opacity = 1;
+    turn = '1st Player';
+    container1vs1.style.display = 'block';
+    container1vs1.style.display = 'flex';
+    board1.style.opacity = 1;
+    board2.style.opacity = 1;
     board1.innerHTML = '';
     board2.innerHTML = '';
     buildBoard1();
@@ -165,7 +173,7 @@ let gameStarted = false;
        const p2Cells = document.querySelectorAll('.grid-cell-board2');
        p2Cells.forEach(cell => cell.classList.add('enemy'));
        dialog1VS1.showModal();
-       const container1vs1 = document.querySelector('.container__1-vs-1');
+       
        container1vs1.style.display = 'flex';
    }
   }
@@ -353,7 +361,10 @@ secondPlayerBoard.addEventListener('click', (event) => {
   playerShipPlaced++;
   shipName3.textContent = shipNames[playerShipPlaced];
   if(playerShipPlaced == 5) {
+    resetBtn.style.opacity = 0.7;
     dialog1VS1.close();
+    board1.style.opacity = 0.5;
+    board2.style.opacity = 1;
     gameStarted = true;
     firstPlayerContainer.classList.remove('show-2');
     secondPlayerContainer.classList.remove('show-2');
@@ -383,6 +394,70 @@ rotateBtn2.addEventListener('click', () => {
    direct = 'vertical';
   } else if(direct === 'vertical') {
    direct = 'horizontal';
+  }
+ });
+
+ board1.addEventListener('click', (event) => {
+  if(!event.target.classList.contains('grid-cell-board1')) return;
+  if(!gameStarted) return;
+  if(event.target.classList.contains('shotted')) return;
+
+  const coordX = parseInt(event.target.getAttribute('x-data'), 10);
+  const coordY = parseInt(event.target.getAttribute('y-data'), 10);
+
+  const cell = document.querySelector(`.grid-cell-board1[x-data="${coordX}"][y-data="${coordY}"]`);
+  try {
+    if(playVS == 'Player') {
+      if(turn == '2nd Player') {
+      
+      player.gameBoard.receiveAttack(coordX, coordY);
+      const player2MissedShots = player.gameBoard.missedShots;
+  cell.classList.add('shotted');
+
+  const isMiss = player2MissedShots.some(shot => shot.x === coordX && shot.y === coordY);
+
+  if (isMiss) {
+    const missDot = document.createElement('span');
+    missDot.classList.add('miss');
+    cell.appendChild(missDot);
+  } else {
+    const hitDot = document.createElement('span');
+    hitDot.classList.add('hit');
+    cell.appendChild(hitDot);
+  }
+
+  turn = '1st Player';
+  board1.style.opacity = 0.5;
+  board2.style.opacity = 1;
+
+  if(player.gameBoard.allShipsSunk()) {
+    const resultTitle = document.querySelector(".result-title");
+    resultTitle.classList.add('for-players');
+    resultTitle.textContent = "2nd Player won!";
+    const resultDes = document.querySelector('.result-des');
+    resultDes.textContent = "The battle is over";
+    dialogResult.showModal();
+    gameStarted = false;
+    player = undefined;
+    player2 = undefined;
+    computer = undefined;
+    dialogBoard1.innerHTML = '';
+    direct = 'horizontal';
+    playerShipPlaced = 0;
+    gameStarted = false;
+    board1.style.opacity = 1;
+    board2.style.opacity = 1;
+    board1.innerHTML = '';
+    board2.innerHTML = '';
+    resetBtn.style.opacity = 1;
+    buildBoard1();
+    buildBoard2(); 
+  }
+
+}
+    }
+  } catch (error) {
+    console.error('Error:', error);
   }
  });
 
@@ -418,7 +493,7 @@ if(computer.gameBoard.allShipsSunk()) {
   resultTitle.classList.add('win')
   resultTitle.textContent = 'You won!';
   const resultDes = document.querySelector('.result-des');
-  resultDes.textContent = 'All of enemy ships are sunk';
+  resultDes.textContent = "All of enemy's ships are sunk";
   dialogResult.showModal();
   gameStarted = false;
   player = undefined;
@@ -429,11 +504,10 @@ if(computer.gameBoard.allShipsSunk()) {
   gameStarted = false;
   board1.innerHTML = '';
   board2.innerHTML = '';
+  resetBtn.style.opacity = 1;
   buildBoard1();
   buildBoard2(); 
 }
-
-
 
 computer.randomAttack(player);
   const compMissedShots = player.gameBoard.missedShots;
@@ -473,6 +547,7 @@ if(player.gameBoard.allShipsSunk()) {
   gameStarted = false;
   board1.innerHTML = '';
   board2.innerHTML = '';
+  resetBtn.style.opacity = 1;
   buildBoard1();
   buildBoard2(); 
 }
@@ -481,11 +556,60 @@ if(player.gameBoard.allShipsSunk()) {
   console.log(player.gameBoard.board);
   console.log(computer.gameBoard.board);
 
+ } else if(playVS == 'Player') {
+  if(turn == '1st Player') {
+  player2.gameBoard.receiveAttack(coordX, coordY);
+  const playerMissedShots = player2.gameBoard.missedShots;
+  cell.classList.add('shotted');
+
+  const isMiss = playerMissedShots.some(shot => shot.x === coordX && shot.y === coordY);
+
+  if (isMiss) {
+    const missDot = document.createElement('span');
+    missDot.classList.add('miss');
+    cell.appendChild(missDot);
+    
+  } else {
+    const hitDot = document.createElement('span');
+    hitDot.classList.add('hit');
+    cell.appendChild(hitDot);
+  }
+  
+  turn = '2nd Player';
+  board1.style.opacity = 1;
+  board2.style.opacity = 0.5;
+
+  if(player2.gameBoard.allShipsSunk()) {
+    const resultTitle = document.querySelector(".result-title");
+    resultTitle.classList.add('for-players');
+    resultTitle.textContent = "1st Player won!";
+    const resultDes = document.querySelector('.result-des');
+    resultDes.textContent = "The battle is over";
+    dialogResult.showModal();
+    gameStarted = false;
+    player = undefined;
+    player2 = undefined;
+    computer = undefined;
+    dialogBoard1.innerHTML = '';
+    direct = 'horizontal';
+    playerShipPlaced = 0;
+    gameStarted = false;
+    board1.style.opacity = 1;
+    board2.style.opacity = 1;
+    board1.innerHTML = '';
+    board2.innerHTML = '';
+    turn = '1st Player';
+    resetBtn.style.opacity = 1;
+    buildBoard1();
+    buildBoard2(); 
+    }
+  }
  }
 } catch (error) {
   console.error('Error:', error);
 }
 });
+
  
 resultClose.addEventListener('click', () => {
   dialogResult.classList.add('hide');
@@ -498,8 +622,10 @@ function removeResultClasses() {
   const resultTitle = document.querySelector('.result-title');
    if(resultTitle.classList.contains('win')) {
     resultTitle.classList.remove('win');
-  } else {
+  } else if(resultTitle.classList.contains('lose')) {
     resultTitle.classList.remove('lose');
+  } else {
+    resultTitle.classList.remove('for-players');
   }
 }
 

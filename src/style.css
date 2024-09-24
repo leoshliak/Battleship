@@ -189,6 +189,7 @@ header button:hover::before {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
+    transition: all 0.5s;
 }
 
 .board-div {
@@ -365,6 +366,7 @@ header button:hover::before {
 .grid-cell-board1.shotted,
 .grid-cell-board2.shotted {
     background-color: #d3d3d3;
+    cursor: not-allowed;
 }
 
 .grid-cell-board1 .hit,
@@ -420,6 +422,9 @@ header button:hover::before {
    background-image:  linear-gradient(90deg, rgba(143,17,17,1) 0%, rgba(68,2,2,1) 46%, rgba(143,17,17,1) 100%);
 }
 
+.result-title.for-players {
+    background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+}
 
 .result-des {
     font-size: 1.9rem;
@@ -500,12 +505,9 @@ header button:hover::before {
     animation: show 1s ease normal;
 }
 
-
-
-.show-2{
+.show-2 {
     transform: translate(-108%, 0px);
 }
-
 
 .dots {
     width: 100%;
@@ -521,7 +523,7 @@ header button:hover::before {
     height: 12px;
     border-radius: 50%;
     background-color: #000;
-    transition: all 0.8s;
+    transition: all 0.3s;
 }
 
 .dot.active {
