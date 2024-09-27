@@ -107,7 +107,6 @@ let turn = '1st Player'
     resetBtn.style.opacity = 1;
     turn = '1st Player';
     container1vs1.style.display = 'block';
-    container1vs1.style.display = 'flex';
     board1.style.opacity = 1;
     board2.style.opacity = 1;
     board1.innerHTML = '';
@@ -119,6 +118,8 @@ let turn = '1st Player'
   if(selectType.value == 'Computer') {
     playVS = 'Computer';
     shipName1.textContent = 'Carrier';
+    board1Text.textContent = 'Your Board';
+    board2Text.textContent = 'Enemy Board';
    let x = 0;
     let y = 10;
    for(let i = 0; i < 100; i++) {
@@ -139,10 +140,13 @@ let turn = '1st Player'
     const compCells = document.querySelectorAll('.grid-cell-board2');
     compCells.forEach(cell => cell.classList.add('enemy'));
    computer.placeShipsRandomly();
-   console.log(computer);
    dialogVScomputer.showModal();
   } else if(selectType.value == 'Player') {
+    shipName2.textContent = 'Carrier';
+    shipName3.textContent = 'Carrier';
     playVS = 'Player';
+    board1Text.textContent = '1st Player Board';
+    board2Text.textContent = '2nd Player Board';
     let x = 0;
     let y = 10;
     for(let i = 0; i < 100; i++) {
@@ -293,7 +297,6 @@ dialogBoard1.addEventListener('click', (event) =>{
 
    playerShipPlaced++;
    shipName1.textContent = shipNames[playerShipPlaced];
-   console.log(player);
    if(playerShipPlaced == 5) {
     dialogVScomputer.close();
     gameStarted = true;
@@ -442,7 +445,10 @@ rotateBtn2.addEventListener('click', () => {
     player2 = undefined;
     computer = undefined;
     dialogBoard1.innerHTML = '';
+    firstPlayerBoard.innerHTML = '';
+    secondPlayerBoard.innerHTML = '';
     direct = 'horizontal';
+    container1vs1.style.display = 'block';
     playerShipPlaced = 0;
     gameStarted = false;
     board1.style.opacity = 1;
@@ -552,10 +558,6 @@ if(player.gameBoard.allShipsSunk()) {
   buildBoard2(); 
 }
 
-  console.log(compAllShots);
-  console.log(player.gameBoard.board);
-  console.log(computer.gameBoard.board);
-
  } else if(playVS == 'Player') {
   if(turn == '1st Player') {
   player2.gameBoard.receiveAttack(coordX, coordY);
@@ -591,7 +593,10 @@ if(player.gameBoard.allShipsSunk()) {
     player2 = undefined;
     computer = undefined;
     dialogBoard1.innerHTML = '';
+    firstPlayerBoard.innerHTML = '';
+    secondPlayerBoard.innerHTML = '';
     direct = 'horizontal';
+    container1vs1.style.display = 'block';
     playerShipPlaced = 0;
     gameStarted = false;
     board1.style.opacity = 1;
@@ -643,7 +648,6 @@ resetBtn.addEventListener('click', () =>{
       ship.damage = 0;
       ship.sunk = false;
     }
-    console.log(player);
     const board1Cells = document.querySelectorAll('.grid-cell-board1');
     board1Cells.forEach(cell => {
       cell.classList.remove('shotted');

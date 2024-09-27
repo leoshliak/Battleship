@@ -530,3 +530,254 @@ header button:hover::before {
     width: 28px;
     border-radius: 5px;
 }
+
+ @media (max-width: 1060px) {
+    .boards {
+        gap: 8%;
+    }
+ }
+
+ @media (max-width: 990px) {
+    .board-1, .board-2 {
+        width: 50vh;
+        height: 50vh;
+    }
+
+    .boards {
+        gap: 8%;
+        margin-top: 7vh;
+    }
+
+    .container {
+        padding: 2rem 0.5rem;
+    }
+ }
+
+ @media (max-width: 850px) {
+    .logo h1 {
+        font-size: 2.3rem;
+    }
+
+    header button {
+        font-size: 0.7rem;
+        font-weight: 700;
+        height: 1.8rem;
+        padding: 0 0.7rem;
+        letter-spacing: 0.3px;
+        border-radius: 4px;
+    }
+
+    .select-text {
+        font-size: 1.6rem;
+        letter-spacing: 0.4px;
+        font-weight: 800;
+    }
+
+    #type {
+    padding: 0 0.5em;
+    font-size: 1em;
+    letter-spacing: 0.3px;
+    }
+
+    .options {
+        width: 8em;
+        height: 1.8em;
+        line-height: 3;
+    }
+
+    .options::after {
+      bottom: -35%;
+      right: 0;
+      padding: 0 0.4em;
+    }
+
+    .select-mode {
+        padding-bottom: 15px;
+    }
+
+    .board-div p {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+    }
+
+    .board-div {
+        gap: 8px;
+    }
+
+    .board-1, .board-2 {
+        width: 45vh;
+        height: 45vh;
+    }
+
+    .grid-cell-board1 .miss, .grid-cell-board2 .miss {
+        width: 10px;
+        height: 10px;
+    }
+
+    .grid-cell-board1 .hit, .grid-cell-board2 .hit {
+        width: 10px;
+        height: 10px;
+ }
+
+ .boards {
+    gap: 6%;
+    margin-top: 8vh;
+}
+
+.container {
+    padding: 2.5rem 0.5rem;
+}
+}
+
+@media (max-width: 730px) {
+    .boards {
+        gap: 30px;
+        margin-top: 4vh;
+        flex-direction: column;
+    }
+
+    .container {
+        padding: 1.5rem 0.5rem;
+    }
+}
+
+@media (max-width: 580px) {
+    header {
+        padding: 0.3rem 1rem;
+    }
+
+    .logo h1 {
+        font-size: 2.3rem;
+    }
+
+    header button {
+        font-size: 0.6rem;
+        height: 1.6rem;
+        padding: 0 0.6rem;
+        letter-spacing: 0.3px;
+        border-radius: 4px;
+    }
+
+    .select-text {
+        font-size: 1.2rem;
+        letter-spacing: 0.2px;
+    }
+
+    #type {
+        font-size: 0.7em;
+        letter-spacing: 0.2px;
+    }
+
+    .options {
+        width: 6em;
+        height: 1.4em;
+        line-height: 3;
+    }
+
+    .options::after {
+        bottom: -57%;
+        right: 0;
+        padding: 0 0.2em;
+    }
+
+    .board-div p {
+        font-size: 1.2rem;
+        font-weight: 700;
+        letter-spacing: 0.6px;
+    }
+
+    .board-div {
+        gap: 6px;
+    }
+
+    .board-1, .board-2 {
+        width: 40vh;
+        height: 40vh;
+    }
+
+    .dialog-board1, .first-player-board, .second-player-board {
+        width: 300px;
+        height: 300px;
+    }
+
+    .dialog1-title {
+        font-size: 1.6rem;
+    }
+
+    .dialog1-subtitle, .first-player-subtitle, .second-player-subtitle {
+        font-size: 1.3rem;
+    }
+
+    .dialog1-container, .first-player-container, .second-player-container {
+        gap: 15px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+
+    .dialog1-rotate, .first-player-rotate, .second-player-rotate {
+        font-size: 1rem;
+        padding: 3px 5px;
+        letter-spacing: 1px;
+        border-radius: 4px;
+    }
+
+    .dialog__1-vs-1 {
+        padding: 0.7rem 1.5rem;
+        width: 360px;
+    }
+
+    .container__1-vs-1 {
+        gap: 25px;
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
+    }
+
+    .dot.active {
+        width: 25px;
+        border-radius: 4px;
+    }
+
+    .dots {
+        width: 100%;
+        gap: 10px;
+        margin-top: 8px;
+    }
+
+    .result-title {
+        font-size: 2rem;
+        letter-spacing: 0.3px;
+    }
+
+    .result-des {
+        font-size: 1.65rem;
+    }
+
+    .dialog-result-container {
+        gap: 30px;
+    }
+
+    .result-close {
+        font-size: 2rem;
+        padding: 0.3rem 1.2rem;
+        letter-spacing: 0.9px;
+        margin-bottom: 8px;
+        border-radius: 5px;
+    }
+
+    .select-mode {
+        gap: 50px;
+        width: 80%;
+        padding-bottom: 15px;
+    }
+}
+
+@media (min-height: 800px) {
+    .board-1, .board-2 {
+        width: 40vh;
+        height: 40vh;
+    }
+}
