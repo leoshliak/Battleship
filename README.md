@@ -1,3 +1,22 @@
+🚢 **Battleship Game**
+
+A classic Battleship game built with HTML, CSS, and JavaScript, bundled using Webpack. Place your ships, strategize, and sink the enemy fleet! 🎯
+
+🎮 **About**
+
+This project is part of my learning journey with The Odin Project. It was created to practice JavaScript modules, DOM manipulation, testable logic, and working with build tools like Webpack.
+
+🧰 **Tech Stack**
+
+HTML5
+
+CSS3
+
+JavaScript (ES6+)
+
+Webpack
+
+
 # Battleship
 Odin Project: Battleship 
 ![image](https://github.com/user-attachments/assets/a95e4fed-f14a-4987-9ddb-5bd5bbf6904a)
